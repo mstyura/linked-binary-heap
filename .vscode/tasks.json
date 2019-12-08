@@ -1,0 +1,120 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CMake configure (Debug)",
+            "type": "shell",
+            "command":[
+                "cmake -E make_directory ${workspaceFolder}/build/Debug",
+                "&&",
+                "cd ${workspaceFolder}/build/Debug",
+                "&&",
+                "cmake -DCMAKE_BUILD_TYPE=Debug ${workspaceFolder}",
+            ],
+            "group": "none"
+        },
+        {
+            "label": "CMake configure (RelWithDebInfo)",
+            "type": "shell",
+            "command":[
+                "cmake -E make_directory ${workspaceFolder}/build/RelWithDebInfo",
+                "&&",
+                "cd ${workspaceFolder}/build/RelWithDebInfo",
+                "&&",
+                "cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ${workspaceFolder}",
+            ],
+            "group": "none"
+        },
+        {
+            "label": "CMake configure (ReleaseWithAsan)",
+            "type": "shell",
+            "command":[
+                "cmake -E make_directory ${workspaceFolder}/build/ReleaseWithAsan",
+                "&&",
+                "cd ${workspaceFolder}/build/ReleaseWithAsan",
+                "&&",
+                "cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -Dsanitize_address=ON ${workspaceFolder}",
+            ],
+            "group": "none"
+        },
+        {
+            "label": "CMake configure (ReleaseWithMsan)",
+            "type": "shell",
+            "command":[
+                "cmake -E make_directory ${workspaceFolder}/build/ReleaseWithMsan",
+                "&&",
+                "cd ${workspaceFolder}/build/ReleaseWithMsan",
+                "&&",
+                "cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -Dsanitize_memory=ON ${workspaceFolder}",
+            ],
+            "group": "none",
+            "options": {
+                "env":{
+                    "CC": "/usr/bin/clang"
+                }
+            }
+        },
+        {
+            "label": "CMake build (Debug)",
+            "type": "shell",
+            "command": "cmake --build ${workspaceFolder}/build/Debug --config Debug --target all -- -j 8",
+            "group": "build"
+        },
+        {
+            "label": "CMake build (RelWithDebInfo)",
+            "type": "shell",
+            "command": "cmake --build ${workspaceFolder}/build/RelWithDebInfo --config RelWithDebInfo --target all -- -j 8",
+            "group": "build"
+        },
+        {
+            "label": "CMake build (ReleaseWithAsan)",
+            "type": "shell",
+            "command": "cmake --build ${workspaceFolder}/build/ReleaseWithAsan --config RelWithDebInfo --target all -- -j 8",
+            "group": "build"
+        },
+        {
+            "label": "CMake build (ReleaseWithMsan)",
+            "type": "shell",
+            "command": "cmake --build ${workspaceFolder}/build/ReleaseWithMsan --config RelWithDebInfo --target all -- -j 8",
+            "group": "build"
+        },
+        {
+            "label": "linked_binary_heap_tests (Debug)",
+            "type": "shell",
+            "command": "./linked_binary_heap_tests",
+            "options": {
+                "cwd": "${workspaceFolder}/build/Debug"
+            },
+            "group": "test"
+        },
+        {
+            "label": "linked_binary_heap_tests (RelWithDebInfo)",
+            "type": "shell",
+            "command": "./linked_binary_heap_tests",
+            "options": {
+                "cwd": "${workspaceFolder}/build/RelWithDebInfo"
+            },
+            "group": "test"
+        },
+        {
+            "label": "linked_binary_heap_tests (ReleaseWithAsan)",
+            "type": "shell",
+            "command": "./linked_binary_heap_tests",
+            "options": {
+                "cwd": "${workspaceFolder}/build/ReleaseWithAsan"
+            },
+            "group": "test"
+        },
+        {
+            "label": "linked_binary_heap_tests (ReleaseWithMsan)",
+            "type": "shell",
+            "command": "./linked_binary_heap_tests",
+            "options": {
+                "cwd": "${workspaceFolder}/build/ReleaseWithMsan"
+            },
+            "group": "test"
+        }
+    ]
+}
