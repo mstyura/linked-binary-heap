@@ -18,13 +18,13 @@ if (sanitize_address AND sanitize_memory)
 	message(FATAL_ERROR "Memory and Address sanitizers can not both be enabled")
 endif ()
 
-if (CMAKE_C_COMPILER_ID MATCHES "MSVC" OR 
+if (CMAKE_C_COMPILER_ID MATCHES "MSVC" OR
     CMAKE_C_SIMULATE_ID MATCHES "MSVC")
 
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Wall")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /WX")
 
-elseif (CMAKE_C_COMPILER_ID MATCHES "Clang" OR 
+elseif (CMAKE_C_COMPILER_ID MATCHES "Clang" OR
         CMAKE_C_COMPILER_ID MATCHES "AppleClang" OR
         CMAKE_C_COMPILER_ID MATCHES "GNU")
 
@@ -49,7 +49,7 @@ add_library(linked_binary_heap_library
 )
 
 target_include_directories(linked_binary_heap_library
-    PUBLIC 
+    PUBLIC
         ${PROJECT_SOURCE_DIR}/src
 )
 

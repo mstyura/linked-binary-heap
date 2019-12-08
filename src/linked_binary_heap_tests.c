@@ -43,7 +43,7 @@ void
 shuffle_array(uint32_t *a, size_t size)
 {
     // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
-    for (size_t i = size - 1; i >= 1; i--) 
+    for (size_t i = size - 1; i >= 1; i--)
     {
         const size_t r = (size_t)1 * RAND_MAX * rand() + rand();
         size_t j = r % (i + 1);
@@ -56,7 +56,7 @@ shuffle_array(uint32_t *a, size_t size)
 /**
  * Simulates timer
  */
-typedef struct 
+typedef struct
 {
     linked_binary_heap_node_t heap_node;
     uint32_t time;
@@ -112,7 +112,7 @@ test_linked_binary_heap_node_traverse_path(void)
         struct test_case tc = test_cases[i];
         size_t computed_path;
         uint8_t computed_depth;
-        
+
         linked_binary_heap_node_get_traverse_path_from_index(
             tc.index, &computed_path, &computed_depth);
         if (computed_depth != tc.expected_depth)
@@ -170,7 +170,7 @@ test_linked_binary_heap_get_node_by_index_simple(void)
         printf("%s test FAILED: Heap is not valid\n", __func__);
         return;
     }
-    
+
     linked_binary_heap_node_t* parent, **node;
     linked_binary_heap_get_node_by_index(&heap, 0, &parent, &node);
 
@@ -292,11 +292,11 @@ test_linked_binary_heap_push_simple(void)
     }
     if (heap.root != &item1.heap_node)
     {
-        printf("%s test FAILED: Item 1 with priority %"PRId32" must be at heap root after insert\n", 
+        printf("%s test FAILED: Item 1 with priority %"PRId32" must be at heap root after insert\n",
             __func__, item1.priority);
         return;
     }
-    
+
     linked_binary_heap_push(&heap, &item2.heap_node);
     if (linked_binary_heap_size(&heap) != 2)
     {
@@ -391,7 +391,7 @@ test_linked_binary_heap_push_pop_sequential_items(void)
             __func__);
         goto free_mem;
     }
-    
+
     printf("%s test PASSED\n", __func__);
 
 free_mem:
@@ -403,7 +403,7 @@ free_mem:
 }
 
 
-void 
+void
 test_linked_binary_heap_push_pop_random_items(void)
 {
     const size_t items_count = 1024 * 1024;
@@ -604,7 +604,7 @@ test_random_remove(void)
     }
 
     remove_order = (uint32_t *)malloc(items_count * sizeof(uint32_t));
-    if (remove_order == NULL) 
+    if (remove_order == NULL)
     {
         printf("%s test FAILED: failed to allocate memory for remove order array \n",
             __func__);
@@ -614,7 +614,7 @@ test_random_remove(void)
     linked_binary_heap_t heap;
     linked_binary_heap_init(&heap, item_comparer, item_visualizer);
 
-    for (uint32_t i = 0; i < items_count; i++) 
+    for (uint32_t i = 0; i < items_count; i++)
     {
         remove_order[i] = i;
         items[i].priority = (i + 1);
@@ -624,11 +624,11 @@ test_random_remove(void)
 
     shuffle_array(remove_order, items_count);
 
-    for (uint32_t i = 0; i < items_count; i++) 
+    for (uint32_t i = 0; i < items_count; i++)
     {
         linked_binary_heap_remove(&heap, &items[remove_order[i]].heap_node);
 
-        if (0 != linked_binary_heap_verify(&heap)) 
+        if (0 != linked_binary_heap_verify(&heap))
         {
             printf("%s test FAILED: heap state is invalid after remove\n",
                 __func__);
@@ -670,7 +670,7 @@ test_timer_overflow(void)
         { UINT32_MAX - 10, 10 /* UINT32_MAX */ },
         { UINT32_MAX / 2 - 10, UINT32_MAX / 2 + 10 },
     };
-    
+
     for (size_t i = 0; i < sizeof(test_cases)/sizeof(test_cases[0]); i++)
     {
         const struct test_case tc = test_cases[i];

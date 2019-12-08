@@ -26,7 +26,7 @@ linked_binary_heap_node_compare_data(
     const linked_binary_heap_node_t* a,
     const linked_binary_heap_node_t* b)
 {
-    if (a == b) 
+    if (a == b)
     {
         return 0;
     }
@@ -78,7 +78,7 @@ linked_binary_heap_node_verify_priorities(
 static int
 linked_binary_heap_node_verify_connectivity(
     const linked_binary_heap_t* heap,
-    const linked_binary_heap_node_t* node) 
+    const linked_binary_heap_node_t* node)
 {
     ASSERT_WITH_MSG(heap != NULL, "Heap pointer must not be null");
     if (node == NULL)
@@ -360,7 +360,7 @@ linked_binary_heap_node_swap_nodes(
         ASSERT_WITH_MSG(0, "Nodes does not belong to the heap");
         return;
     }
-    if (a == b) 
+    if (a == b)
     {
         return;
     }
@@ -453,42 +453,42 @@ linked_binary_heap_node_count_descendants(const linked_binary_heap_node_t* node)
 
 
 static void
-linked_binary_heap_node_print(linked_binary_heap_node_t *node, uint32_t space) 
-{ 
-    if (node == NULL) 
+linked_binary_heap_node_print(linked_binary_heap_node_t *node, uint32_t space)
+{
+    if (node == NULL)
     {
-        return; 
+        return;
     }
     const uint32_t indent = 10;
 
-    space += indent; 
-  
-    linked_binary_heap_node_print(node->right, space); 
+    space += indent;
 
-    printf("\n"); 
+    linked_binary_heap_node_print(node->right, space);
+
+    printf("\n");
     for (uint32_t i = indent; i < space; i++)
     {
         printf(" ");
     }
-    if (node->heap->data_visualizer != NULL) 
+    if (node->heap->data_visualizer != NULL)
     {
         char vis[11] = {0};
         node->heap->data_visualizer(node->data, sizeof(vis) - 1, vis);
-        vis[sizeof(vis)-1] = 0; 
-        printf("%s\n", vis); 
+        vis[sizeof(vis)-1] = 0;
+        printf("%s\n", vis);
     }
-    else 
+    else
     {
-        printf("%p\n", node->data); 
+        printf("%p\n", node->data);
     }
-    linked_binary_heap_node_print(node->left, space); 
+    linked_binary_heap_node_print(node->left, space);
 }
 
 
 void
 linked_binary_heap_node_get_traverse_path_from_index(
-    size_t index, 
-    size_t* out_path, 
+    size_t index,
+    size_t* out_path,
     uint8_t* out_depth)
 {
     size_t path = 0;
@@ -563,7 +563,7 @@ linked_binary_heap_node_init(
 }
 
 
-size_t 
+size_t
 linked_binary_heap_size(
     const linked_binary_heap_t* heap)
 {
@@ -609,15 +609,15 @@ linked_binary_heap_remove(
         last_node = *last_node_loc;
 
         linked_binary_heap_node_swap_nodes(heap, node, last_node);
-        if (node->parent->left == node) 
+        if (node->parent->left == node)
         {
             node->parent->left = NULL;
         }
-        else if (node->parent->right == node) 
+        else if (node->parent->right == node)
         {
             node->parent->right = NULL;
         }
-        else 
+        else
         {
             ASSERT_WITH_MSG(0, "Wrong link from parent node");
             return;
@@ -716,7 +716,7 @@ linked_binary_heap_verify(
     }
 
     int err = linked_binary_heap_node_verify_connectivity(heap, heap->root);
-    if (err != 0) 
+    if (err != 0)
     {
         return err;
     }
@@ -724,9 +724,9 @@ linked_binary_heap_verify(
 }
 
 
-void 
+void
 linked_binary_heap_print(
-    const linked_binary_heap_t* heap) 
+    const linked_binary_heap_t* heap)
 {
     ASSERT_WITH_MSG(heap != NULL, "Heap pointer must not be null");
     linked_binary_heap_node_print(heap->root, 0);
