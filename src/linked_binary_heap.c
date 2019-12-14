@@ -22,7 +22,7 @@ do { assert(((void)(msg), (expression))); } while (0)
 
 static int
 linked_binary_heap_node_compare_data(
-    const linked_binary_heap_t* heap,
+    const linked_binary_heap_node_data_comparer comparer,
     const linked_binary_heap_node_t* a,
     const linked_binary_heap_node_t* b)
 {
@@ -30,7 +30,7 @@ linked_binary_heap_node_compare_data(
     {
         return 0;
     }
-    const int cmp = heap->comparer(a->data, b->data);
+    const int cmp = comparer(a->data, b->data);
     if (cmp != 0)
     {
         return cmp;
@@ -56,7 +56,7 @@ linked_binary_heap_node_verify_priorities(
         return 0;
     }
 
-    if (node->parent != NULL && linked_binary_heap_node_compare_data(heap, node->parent, node) > 0)
+    if (node->parent != NULL && linked_binary_heap_node_compare_data(heap->comparer, node->parent, node) > 0)
     {
         ASSERT_WITH_MSG(0, "Node's parent has bigger priority");
         return -1;
@@ -387,10 +387,11 @@ linked_binary_heap_bubble_up(
     ASSERT_WITH_MSG(heap != NULL, "heap pointer must not be null");
     ASSERT_WITH_MSG(node != NULL, "node pointer must not be null");
 
+    const linked_binary_heap_node_data_comparer comparer = heap->comparer;
     linked_binary_heap_node_t *n = node;
     while (n->parent != NULL)
     {
-        if (linked_binary_heap_node_compare_data(heap, n, n->parent) > 0)
+        if (linked_binary_heap_node_compare_data(comparer, n, n->parent) > 0)
         {
             break;
         }
@@ -410,15 +411,16 @@ linked_binary_heap_bubble_down(
     // The depth 64 mean that heap has ~2^64 nodes, which should
     // be sufficiently enough, but having depth limit might prevent
     // some infinite loop bugs in any.
-    const uint32_t max_depth = 64;
+    const uint32_t max_depth = sizeof(size_t) * 8;
+    const linked_binary_heap_node_data_comparer comparer = heap->comparer;
     for (uint32_t depth = 0; depth < max_depth; depth++)
     {
         linked_binary_heap_node_t* smallest = node;
-        if (node->left != NULL && linked_binary_heap_node_compare_data(heap, node->left, smallest) < 0)
+        if (node->left != NULL && linked_binary_heap_node_compare_data(comparer, node->left, smallest) < 0)
         {
             smallest = node->left;
         }
-        if (node->right != NULL && linked_binary_heap_node_compare_data(heap, node->right, smallest) < 0)
+        if (node->right != NULL && linked_binary_heap_node_compare_data(comparer, node->right, smallest) < 0)
         {
             smallest = node->right;
         }
