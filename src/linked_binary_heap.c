@@ -530,11 +530,11 @@ linked_binary_heap_get_node_by_index(
         parent = *node;
         if (path & (((size_t)1) << i))
         {
-            node = &(*node)->right;
+            node = &parent->right;
         }
         else
         {
-            node = &(*node)->left;
+            node = &parent->left;
         }
     }
     *out_parent = parent;
